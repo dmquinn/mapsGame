@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import Homescreen from "./pages/Homescreen";
+import mapData from "./data/cities.js";
 
-function App() {
+const App = () => {
+  const [randomCity, setRandomCity] = useState({});
+  const [userGuess, setUserGuess] = useState([]);
+  const randomNumber = Math.floor(Math.random() * mapData.length);
+
+  useEffect(() => {
+    setRandomCity(mapData[randomNumber]);
+    console.log(randomCity);
+  }, []);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Homescreen
+        randomCity={randomCity}
+        userGuess={userGuess}
+        setUserGuess={setUserGuess}
+      />
     </div>
   );
-}
+};
 
 export default App;
