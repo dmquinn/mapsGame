@@ -1,4 +1,6 @@
 <h2/>This is a coding assessment for a prospective employer</h2> 
+
+<h5>Visit the deployed app <a href="https://geogoi.herokuapp.com">here</a>!!</h5>
 <h3/>The brief was to:</h3> <ul>
   <li>Build a responsive HTML Game that works on desktop and mobile browsers.  Choose the best suited JavaScript framework</li>
   <li>Use a given JSON file containing city names, with empty longitude and latitude strings</li>
