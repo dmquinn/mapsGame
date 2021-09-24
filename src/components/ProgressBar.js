@@ -1,13 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 const ProgressBar = ({ kmCounter }) => {
-  useEffect(() => {
-    console.log(kmCounter);
-  }, kmCounter);
   return (
-    <div class="progress">
+    <div className="progress">
       <div
-        class="progress-bar bg-info"
+        className="progress-bar bg-info"
         role="progressbar"
         style={{ width: `calc(${kmCounter}% / 15)` }}
         aria-valuenow=""
