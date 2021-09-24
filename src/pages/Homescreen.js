@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Map from "../components/Map";
+import ProgressBar from "../components/ProgressBar";
 import { capitalCities } from "../data/cities.json";
 import haversineDistance from "../utils/haversineDistance";
 
@@ -11,12 +12,13 @@ const Homescreen = ({ randomCity, setUserGuess, userGuess }) => {
   const [gameState, setGameState] = useState("play");
   const [selectedCityIndex, setSelectedCityIndex] = useState(0);
   const [distance, setDistance] = useState(0);
+  const [cityMarker, setCityMarker] = useState(defaultValue);
   const [userCoords, setUserCoords] = useState(defaultValue);
-
   const [userScoreCounter, setUserScore] = useState(0);
   const [kmCounter, setKmCounter] = useState(1500);
 
   const selectedCity = capitalCities?.[selectedCityIndex];
+  // disable marker if userCoords are not set
   const isDisabled = userCoords["lat"] === 0 && userCoords["lng"] === 0;
 
   const handleCheck = (lat, lng) => {
@@ -50,6 +52,7 @@ const Homescreen = ({ randomCity, setUserGuess, userGuess }) => {
     setGameState("play");
     setUserCoords(defaultValue);
     setSelectedCityIndex(selectedCityIndex + 1);
+    setCityMarker(defaultValue);
   };
 
   useEffect(() => {
@@ -57,6 +60,15 @@ const Homescreen = ({ randomCity, setUserGuess, userGuess }) => {
       setGameState("lose");
     }
   }, [kmCounter]);
+  useEffect(() => {
+    gameState === "check" &&
+      distance > 50 &&
+      setCityMarker({
+        lat: parseFloat(capitalCities[selectedCityIndex].lat),
+        lng: parseFloat(capitalCities[selectedCityIndex].long),
+      });
+    console.log("cm", cityMarker);
+  }, [gameState, distance, selectedCityIndex]);
 
   return (
     <div className="container mt-5">
@@ -69,7 +81,7 @@ const Homescreen = ({ randomCity, setUserGuess, userGuess }) => {
             Select the location of {selectedCity?.capitalCity}
           </h5>
         )}
-
+        {/* Cases for check, win, lose, */}
         {gameState === "check" && distance < 50 && (
           <h5 className="mt-lg-5"> Correct 😃</h5>
         )}
@@ -91,17 +103,18 @@ const Homescreen = ({ randomCity, setUserGuess, userGuess }) => {
           userCoords={userCoords}
           setUserCoords={setUserCoords}
           isDisabled={isDisabled}
+          cityMarker={cityMarker}
         />
       )}
-
+      <ProgressBar kmCounter={kmCounter} />
       {!isDisabled && gameState === "play" && (
-        <button onClick={handleCheck} className="mt-2">
+        <button onClick={handleCheck} className="mt-2 button">
           Check
         </button>
       )}
 
       {!isDisabled && gameState === "check" && (
-        <button onClick={handleNextCity} className="mt-2">
+        <button onClick={handleNextCity} className="mt-2 button">
           Next City
         </button>
       )}

@@ -1,25 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import guess from "../guess.svg";
+import correct from "../correct.svg";
 
 const googleMapsApiKey = process.env.REACT_APP_MAPS_API;
 
 const containerStyles = { height: " 60vh", width: "100%" };
 
-const Map = ({
-  selectedCity,
-  handleCheck,
-  userCoords,
-  setUserCoords,
-  isDisabled,
-}) => {
+const Map = ({ userCoords, setUserCoords, isDisabled, cityMarker }) => {
   const onClick = (mapsMouseEvent) => {
     const clickedCoords = mapsMouseEvent.latLng.toJSON();
-
     setUserCoords(clickedCoords);
   };
-
+  useEffect(() => {
+    console.log("cityMarker", cityMarker);
+  }, [cityMarker]);
   return (
-    <div className="mt-5">
+    <div className="mt-5 mapContainer">
       <LoadScript googleMapsApiKey={googleMapsApiKey}>
         <GoogleMap
           mapContainerStyle={containerStyles}
@@ -31,7 +28,8 @@ const Map = ({
           }}
           onClick={onClick}
         >
-          {!isDisabled && <Marker position={userCoords} />}
+          {!isDisabled && <Marker position={userCoords} icon={guess} />}
+          <Marker position={cityMarker} icon={correct} />
         </GoogleMap>
       </LoadScript>
     </div>
