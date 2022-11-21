@@ -1,6 +1,6 @@
 import React from "react";
 
-const ProgressBar = ({ kmCounter }) => {
+const VideoProgressBar = ({ kmCounter }) => {
   return (
     <div className="progress">
       <div
@@ -15,4 +15,4 @@ const ProgressBar = ({ kmCounter }) => {
   );
 };
 
-export default ProgressBar;
+export default VideoProgressBar;

@@ -8,7 +8,7 @@ const defaultValue = { lat: 0, lng: 0 };
 
 //GameState: play , check , win , lose //
 
-const Homescreen = ({ randomCity, setUserGuess, userGuess }) => {
+const Homescreen = () => {
   const [gameState, setGameState] = useState("play");
   const [selectedCityIndex, setSelectedCityIndex] = useState(0);
   const [distance, setDistance] = useState(0);
@@ -36,7 +36,7 @@ const Homescreen = ({ randomCity, setUserGuess, userGuess }) => {
     );
 
     setDistance(distance);
-
+    //
     if (distance < 50) {
       setUserScore(userScoreCounter + 1);
     } else {
